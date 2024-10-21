@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon src/server.ts",
+    "start:dev": "nodemon src/main.ts",
     "start:prod": "npm run build && npm run start",
     "start:multi": "nodemon src/cluster.ts",
-    "start": "node dist/server.js",
+    "start": "node dist/main.js",
     "build": "tsc",
     "tests": "jest --testMatch='**/*.test.ts'",
     "format": "prettier --write '**/*.{ts,tsx}'"
@@ -16,16 +16,24 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/dotenv": "^6.1.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.13",
     "@types/node": "^22.7.7",
+    "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
     "dotenv": "^16.4.5",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "jest": "^29.7.0",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
+    "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
