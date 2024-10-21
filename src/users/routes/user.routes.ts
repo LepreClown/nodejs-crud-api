@@ -1,7 +1,14 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { sendResponse } from '../helpres';
+import { getResData, sendResponse } from '../helpres';
 import { EndpointsEnum } from '../constants/endpoints.constants';
 import { ResStatusEnum } from '../constants/resStatus.constants';
+import {
+  createUser,
+  deleteUserById,
+  getAllUsers,
+  getUserById,
+  updateUserById,
+} from '../users.controller';
 
 export const userRoutes = async (req: IncomingMessage, res: ServerResponse) => {
   const { method, url } = req;
@@ -11,14 +18,15 @@ export const userRoutes = async (req: IncomingMessage, res: ServerResponse) => {
     return;
   }
 
-  const id = url.split('/')[3];
+  const pathParts = url.split('/');
+  const id = pathParts.length > 3 ? pathParts[3] : null;
 
   switch (method) {
     case 'GET':
       if (url === EndpointsEnum.GET_ALL) {
-        // return controller func
+        return getAllUsers(req, res);
       } else if (url.includes(EndpointsEnum.GET_BY_ID) && id) {
-        // return controller func
+        return getUserById(req, res, id);
       } else {
         sendResponse(res, ResStatusEnum.BAD_REQUEST, {
           message: 'Method not found',
@@ -28,8 +36,9 @@ export const userRoutes = async (req: IncomingMessage, res: ServerResponse) => {
     case 'POST':
       if (url === EndpointsEnum.CREATE) {
         try {
-          // const body = await getResData(req);
-          // return controller func
+          const body = await getResData(req);
+
+          return createUser(req, res, body);
         } catch (error) {
           sendResponse(res, ResStatusEnum.BAD_REQUEST, {
             message: 'Invalid JSON',
@@ -40,8 +49,9 @@ export const userRoutes = async (req: IncomingMessage, res: ServerResponse) => {
     case 'PUT':
       if (url.includes(EndpointsEnum.UPDATE) && id) {
         try {
-          // const body = await getResData(req);
-          // return controller func
+          const body = await getResData(req);
+
+          return updateUserById(req, res, id, body);
         } catch (error) {
           sendResponse(res, ResStatusEnum.BAD_REQUEST, {
             message: 'Invalid JSON',
@@ -55,7 +65,7 @@ export const userRoutes = async (req: IncomingMessage, res: ServerResponse) => {
       break;
     case 'DELETE':
       if (url.includes(EndpointsEnum.DELETE) && id) {
-        // return controller func
+        return deleteUserById(req, res, id);
       } else {
         sendResponse(res, ResStatusEnum.BAD_REQUEST, {
           message: 'Method not found',

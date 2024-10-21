@@ -1,5 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { validate as uuidValidate } from 'uuid';
+import { ResHeaders } from '../constants/headers.constants';
 
 export const getResData = (req: IncomingMessage): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -21,7 +22,11 @@ export const validateUUID = (id: string): boolean => {
   return uuidValidate(id);
 };
 
-export const sendResponse = (res: ServerResponse, statusCode: number, data: object | null) => {
-  res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+export const sendResponse = (
+  res: ServerResponse,
+  statusCode: number,
+  data: object | null,
+) => {
+  res.writeHead(statusCode, { ...ResHeaders });
   res.end(data ? JSON.stringify(data) : null);
 };

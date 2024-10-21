@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon src/server.ts",
+    "start:dev": "nodemon src/main.ts",
     "start:prod": "npm run build && npm run start",
     "start:multi": "nodemon src/cluster.ts",
-    "start": "node dist/server.js",
+    "start": "node dist/main.js",
     "build": "tsc",
     "tests": "jest --testMatch='**/*.test.ts'",
     "format": "prettier --write '**/*.{ts,tsx}'"
