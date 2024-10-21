@@ -10,7 +10,7 @@ dotenv.config();
 const DEFAULT_PORT = 4000;
 const PORT = process.env.PORT || DEFAULT_PORT;
 
-const server = createServer(
+export const server = createServer(
   async (req: IncomingMessage, res: ServerResponse) => {
     try {
       await userRoutes(req, res);
